@@ -44,7 +44,7 @@ func StartRPCGatewayServer() {
 	IPPORT := os.Getenv("IP_PORT")
 	// GRPCPORT := os.Getenv("GRPC_PORT")
 
-	// err := protobuf_author.RegisterAuthorServiceHandlerFromEndpoint(context.Background(), gwmux, ":"+GRPCPORT, []grpc.DialOption{grpc.WithInsecure()})
+	// err := protobuf_item.RegisterItemServiceHandlerFromEndpoint(context.Background(), gwmux, ":"+GRPCPORT, []grpc.DialOption{grpc.WithInsecure()})
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
@@ -64,11 +64,11 @@ func StartRPCServer() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	// authorRepository := repository.RepositoryAuthor(config.DB)
+	// itemRepository := repository.RepositoryItem(config.DB)
 
-	// h := handler.HandlerAuthor(authorRepository)
+	// h := handler.HandlerItem(itemRepository)
 
-	// protobuf_author.RegisterAuthorServiceServer(s, h)
+	// protobuf_item.RegisterItemServiceServer(s, h)
 
 	log.Printf("gRPC server listening on port %v\n", GRPCPORT)
 	if err := s.Serve(lis); err != nil {
