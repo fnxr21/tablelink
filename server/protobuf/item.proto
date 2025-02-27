@@ -1,0 +1,63 @@
+syntax = "proto3"; 
+
+package protobuf_item;
+
+option go_package="/protobuf_item";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+
+
+message ProtoItemRepo {
+   message ProtoItem {
+    uint64 ID = 1; // Use uint64 for the database ID.
+    string Name = 2 [(google.api.field_behavior) = REQUIRED, json_name = "name"];
+    string Price = 3 [(google.api.field_behavior) = REQUIRED, json_name = "price"];
+    string Status = 4 [(google.api.field_behavior) = REQUIRED, json_name = "status"];
+}
+    repeated ProtoItem item = 1;
+}
+
+// message UpdateRequest {
+//     uint64 ID = 1  [(google.api.field_behavior) = REQUIRED, json_name = "id"]; // Use uint64 for the database ID.
+//     string Name = 2 ;
+//     string Biography=3;
+// }
+
+// message DeleteItemResponse {
+//     string message = 1;
+// }
+
+
+service ItemService {
+	rpc CreateItem(ProtoItemRepo.ProtoItem) returns (ProtoItemRepo.ProtoItem) {
+        option (google.api.http) = {
+            post: "/api/item"
+            body: "*"
+        };
+    };
+    rpc GetItemList(google.protobuf.Empty) returns (stream ProtoItemRepo.ProtoItem) {
+        option (google.api.http) = {
+            get: "/api/items"
+        };        
+    };
+    // rpc GetItemById(google.protobuf.Int64Value) returns (ProtoItemRepo.ProtoItem) {
+    //     option (google.api.http) = {
+    //         get: "/api/item/{value}"
+    //     };        
+    // };
+	// rpc UpdateItem(UpdateRequest) returns (ProtoItemRepo.ProtoItem) {
+    //     option (google.api.http) = {
+    //         put: "/api/item/{ID}"
+    //         body: "*"      
+    //     };
+    // };
+	// rpc DeleteItem(google.protobuf.Int64Value) returns (DeleteItemResponse) {
+    //     option (google.api.http) = {
+    //         delete: "/api/item/{value}"
+    //     };        
+    // };
+}
+

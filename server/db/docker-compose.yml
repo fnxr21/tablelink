@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  tablelinkdb:
+    image: postgres:latest # Consider using a specific version (e.g., postgres:14)
+    container_name: tablelinkdb-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root21!Save # Use environment variables for security
+      POSTGRES_DB: public
+    ports:
+      - ${DB_PORT_ITEM}:${DB_DEFAULTPORT}
+    volumes:
+      - tablelinkdb_data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d/init.sql # Read-only
+
+volumes:
+  tablelinkdb_data:
